@@ -14,41 +14,58 @@ public class Base64DecoderTester {
 
 	@Test
 	public void testConvertBase64Char() {
-		assertEquals(0, Base64Decoder.convertBase64Char('A'));
-		assertEquals(1, Base64Decoder.convertBase64Char('B'));
-		assertEquals(4, Base64Decoder.convertBase64Char('E'));
-		assertEquals(63, Base64Decoder.convertBase64Char('/'));
-		assertEquals(27, Base64Decoder.convertBase64Char('b'));
-		assertEquals(45, Base64Decoder.convertBase64Char('t'));
+		try {
+			assertEquals(0, Base64Decoder.convertBase64Char('A'));
+			assertEquals(1, Base64Decoder.convertBase64Char('B'));
+			assertEquals(4, Base64Decoder.convertBase64Char('E'));
+			assertEquals(63, Base64Decoder.convertBase64Char('/'));
+			assertEquals(27, Base64Decoder.convertBase64Char('b'));
+			assertEquals(45, Base64Decoder.convertBase64Char('t'));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testBase64ToByteArray() {
 		byte[] answer = { 0, 0, 0 };
-		byte[] check = Base64Decoder.convert4CharsTo24Bits("AAAA");
-		// 000.000 000.000 000.000 000.000
-		// 0000.0000 0000.0000 0000.0000
-		assertArrayEquals(answer, check);
+		byte[] check;
+		try {
+			check = Base64Decoder.convert4CharsTo24Bits("AAAA");
+			// 000.000 000.000 000.000 000.000
+			// 0000.0000 0000.0000 0000.0000
+			assertArrayEquals(answer, check);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		answer[0] = (byte) 255;
 		answer[1] = (byte) 255;
 		answer[2] = (byte) 255;
-		check = Base64Decoder.convert4CharsTo24Bits("////");
+		try {
+			check = Base64Decoder.convert4CharsTo24Bits("////");
 		// 111.111 111.111 111.111 111.111
 		// 1111.1111 1111.1111 1111.1111
 		assertArrayEquals(answer, check);
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		answer[0] = (byte) 7;
 		answer[1] = (byte) 13;
 		answer[2] = (byte) 126;
-		check = Base64Decoder.convert4CharsTo24Bits("Bw1+");
-		// 000.001 110.000 110.101 111.110
-		// 0000.0111 0000.1101. 0111.1110
-		assertArrayEquals(answer, check);
+		try {
+			check = Base64Decoder.convert4CharsTo24Bits("Bw1+");
+			// 000.001 110.000 110.101 111.110
+			// 0000.0111 0000.1101. 0111.1110
+			assertArrayEquals(answer, check);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testBase64StringToByteArray() {
+		/*
 		String file = "";
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("src/_04_Base64_Decoder/base64_data.txt"));
@@ -65,6 +82,8 @@ public class Base64DecoderTester {
 		}
 
 		byte[] bits = Base64Decoder.base64StringToByteArray(file);
+		*/
+		byte[] bits = Base64Decoder.base64StringToByteArray("src/_04_Base64_Decoder/base64_data.txt");
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("src/_04_Base64_Decoder/decoded_string.txt"));
 			String line = br.readLine();
